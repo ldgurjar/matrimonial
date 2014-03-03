@@ -1,13 +1,7 @@
 <!-- app/View/Users/register.ctp -->
-<div class="users form">
+<div class='alert alert-success' style='margin-top:30px;'><a class='close' data-dismiss='alert'>×</a> Registration Done.</div>
 <?php 
-/*if( isset( $userprofile ) ){
-		debug( $userprofile );
-}
-if( isset( $provider ) ){
-		debug( $provider );
-}*/
-//debug($identifier);
+
 echo $this->Session->flash('auth');
 ?>
-</div>
+

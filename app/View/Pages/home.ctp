@@ -13,6 +13,7 @@ endif;
 
 App::uses('Debugger', 'Utility');
 ?>
+<section class="middle-part container">
 <h2><?php echo __d('cake_dev', 'Release Notes for CakePHP %s.', Configure::version()); ?></h2>
 <p>
 	<a href="http://cakephp.org/changelogs/<?php echo Configure::version(); ?>"><?php echo __d('cake_dev', 'Read the changelog'); ?> </a>
@@ -231,3 +232,4 @@ You can also add some CSS styles for your pages at: %s.',
 	<li><a href="http://cakefoundation.org"><?php echo __d('cake_dev', 'Cake Software Foundation'); ?> </a>
 	<ul><li><?php echo __d('cake_dev', 'Promoting development related to CakePHP'); ?></li></ul></li>
 </ul>
+</section>

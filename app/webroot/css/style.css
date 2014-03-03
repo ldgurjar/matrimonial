@@ -2,6 +2,7 @@ body {
 	/*background: url(../img/bg-image.jpg) top center no-repeat;*/
 	font-family: Segoe UI, Arial;
 	font-size: 14px; 
+	word-wrap: break-word;
 }
 
 body {
@@ -339,6 +340,7 @@ h2.title {
 	display: inline-block;
 	margin: 8px 0px 0px 0px;
 	padding-left: 10px;
+	width: 100%;
 }
 .user-name a {
 	color: #af0000;
@@ -459,6 +461,7 @@ h2.title {
     padding: 0;
     width: 25px;
     margin-left: 5px;
+	text-indent: -9999px;
 }
 
 .left-content-block {
@@ -750,4 +753,45 @@ h2.title {
 	.search-block .input-search .search-input {
 		width: 82%;
 	}
+}
+
+/* Custom Css date 21/02/2014 */
+.form .input-row label.error{
+color: red;
+width: 70%;
+margin-left: 35%;
+text-align: left;
+}
+.form .input-row  label.valid{
+color: green;
+width: 70%;
+margin-left: 35%;
+text-align: left;
+}
+.form .input-checkbox  label.valid{
+color: green !important;
+text-align: left;
+clear: both;
+position: absolute;
+margin-top: 23px;
+}
+.form .input-checkbox  label.error{
+color: red;
+text-align: left;
+clear: both;
+position: absolute;
+margin-top: 23px;
+
+}
+.form .input-row .required {
+margin-left: 0;
+font-size: 100%;
+color: red;
+display: block;
+}
+.imageset .user-img {
+display: inline-block;
+width: 70px;
+background-color: #ffffff;
+vertical-align: top;
 }

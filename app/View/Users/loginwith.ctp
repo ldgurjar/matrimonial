@@ -1,10 +1,11 @@
 <!--//app/View/Users/login.ctp-->
 <?php 
-echo $this->Session->flash('auth');
+//echo $this->Session->flash('auth');
 /*if( isset( $error ) ){
 		debug( $error );
 }*/
 //echo $user_profile->identifier;
+
 if(isset($user_profile)){
 	//$provider=$this->Session->read('provider');
 	//echo $provider;
@@ -18,6 +19,13 @@ if(isset($user_profile)){
 	$firstName =$user_profile->firstName;
 	$lastName =$user_profile->lastName ;
 	$gender =$user_profile->gender ;
+	if($gender=='male'){
+		$unisex=1;
+		$mgender=1;
+	}else{
+		$unisex=2;
+		$mgender=2;
+	}
 	$description =$user_profile->description ;
 	$language =$user_profile->language ;
 	$birthDay =$user_profile->birthDay;
@@ -33,6 +41,7 @@ if(isset($user_profile)){
 	$zip =$user_profile->zip;
 	//echo $zip;
 	//echo $displayName;
+	//debug($countries);
 ?>
 <style type="text/css">
 .rselect select{ 
@@ -55,65 +64,96 @@ margin-left: 50%;
 <?php echo $this->Form->create('User', array('type' => 'file','action' => 'register')); ?>
 <div class="middle-container">
    
-    <h2 class="title"><?php echo 'You are logged in by '.$provider.', Register and Update your Profile' ?></h2>
-
+    <h2 class="title"><?php echo 'You are logged in by '.$provider.', Register and Update your Profile'; ?></h2>
     <div class="form">
             <?php echo $this->Form->input('Matrimonial.provider', array('type' => 'hidden','value' => $provider)); ?>
             <?php echo $this->Form->input('Matrimonial.identifier', array('type' => 'hidden','value' => $identifier) ); ?>
             <?php echo $this->Form->input('Matrimonial.profileURL', array('type' => 'hidden','value' => $profileURL) ); ?>
             <?php echo $this->Form->input('Matrimonial.photoURL', array('type' => 'hidden','value' => $photoURL) ); ?>
-            
-			
-			<?php echo $this->Form->input('User.username', array('type' => 'hidden','value' => $identifier) ); ?>
+            <?php echo $this->Form->input('User.username', array('type' => 'hidden','value' => $identifier) ); ?>
             <?php echo $this->Form->input('User.password', array('type' => 'hidden','value' => $identifier) ); ?>
-             <?php echo $this->Form->input('User.registration_date_time', array('type' => 'hidden','value' => date('Y-m-d H:s:i')) ); ?>
-             <?php echo $this->Form->input('User.email_address', array('type' => 'hidden','value' => $email) ); ?>
-              <?php echo $this->Form->input('User.role', array('type' => 'hidden','value' => 'member') ); ?>
-             <?php 
+            <?php echo $this->Form->input('User.registration_date_time', array('type' => 'hidden','value' => date('Y-m-d H:s:i')) ); ?>
+            <?php echo $this->Form->input('User.email_address', array('type' => 'hidden','value' => $email) ); ?>
+            <?php echo $this->Form->input('User.role', array('type' => 'hidden','value' => 'member') ); ?>
+            <?php echo $this->Form->input('User.is_user_approved', array('type' => 'hidden','value' => 0) ); ?>
+            <?php echo $this->Form->input('User.user_sex', array('type' => 'hidden','value' => $unisex) ); ?>
+            <?php 
 			  if($provider=='Facebook'){
+				    // for user Table
 			       echo $this->Form->input('User.uuid_facebook', array('type' => 'hidden','value' => $profileURL) );
-			  } else if($provider=='Google'){
-				  
-			    echo $this->Form->input('User.uuid_google', array('type' => 'hidden','value' =>  $profileURL) );
-			  } else if($provider=='Twitter'){
-				  
-			    echo $this->Form->input('User. 	uuid_twitter', array('type' => 'hidden','value' =>  $profileURL) );
-			  } else if($provider=='Linkedin'){
-				 echo $this->Form->input('User.uuid_linkedin', array('type' => 'hidden','value' =>  $profileURL) );
-			  }
+				    echo $this->Form->input('User.uuid_google', array('type' => 'hidden','value' => '') );
+					echo $this->Form->input('User.uuid_twitter', array('type' => 'hidden','value' => '') );
+					echo $this->Form->input('User.uuid_linkedin', array('type' => 'hidden','value' => '') );
+					//for matrimonial table
+					echo $this->Form->input('Matrimonial.facebook_profile', array('type' => 'hidden','value' => $profileURL) );
+				    echo $this->Form->input('Matrimonial.twitter_profile', array('type' => 'hidden','value' => '') );
+					echo $this->Form->input('Matrimonial.linkedin_profile', array('type' => 'hidden','value' => '') );
+					echo $this->Form->input('Matrimonial.google_profile', array('type' => 'hidden','value' => '') );
+					  
+			  } 
+			  else if($provider=='Google'){
+				  // for user Table
+			     echo $this->Form->input('User.uuid_google', array('type' => 'hidden','value' =>  $profileURL) );
+				echo $this->Form->input('User.uuid_facebook', array('type' => 'hidden','value' => ''));
+				echo $this->Form->input('User.uuid_twitter', array('type' => 'hidden','value' => ''));
+				echo $this->Form->input('User.uuid_linkedin', array('type' => 'hidden','value' => ''));
 				
+				//for matrimonial table
+					echo $this->Form->input('Matrimonial.facebook_profile', array('type' => 'hidden','value' =>'') );
+				    echo $this->Form->input('Matrimonial.twitter_profile', array('type' => 'hidden','value' => '') );
+					echo $this->Form->input('Matrimonial.linkedin_profile', array('type' => 'hidden','value' => '') );
+					echo $this->Form->input('Matrimonial.google_profile', array('type' => 'hidden','value' =>  $profileURL) );
+			  } 
+			  else if($provider=='Twitter'){
+				echo $this->Form->input('User.uuid_twitter', array('type' => 'hidden','value' =>  $profileURL));
+				echo $this->Form->input('User.uuid_google', array('type' => 'hidden','value' => ''));
+				echo $this->Form->input('User.uuid_facebook', array('type' => 'hidden','value' => ''));
+				echo $this->Form->input('User.uuid_linkedin', array('type' => 'hidden','value' => ''));
+				//for matrimonial table
+				echo $this->Form->input('Matrimonial.facebook_profile', array('type' => 'hidden','value' =>'') );
+				echo $this->Form->input('Matrimonial.twitter_profile', array('type' => 'hidden','value' => $profileURL) );
+				echo $this->Form->input('Matrimonial.linkedin_profile', array('type' => 'hidden','value' => '') );
+				echo $this->Form->input('Matrimonial.google_profile', array('type' => 'hidden','value' =>  '') );
+				
+			  } 
+			  else if($provider=='Linkedin'){
+				 echo $this->Form->input('User.uuid_linkedin', array('type' => 'hidden','value' =>  $profileURL) );
+				 echo $this->Form->input('User.uuid_twitter', array('type' => 'hidden','value' =>  ''));
+				echo $this->Form->input('User.uuid_google', array('type' => 'hidden','value' => ''));
+				echo $this->Form->input('User.uuid_facebook', array('type' => 'hidden','value' => ''));
+				
+				//for matrimonial table
+				echo $this->Form->input('Matrimonial.facebook_profile', array('type' => 'hidden','value' =>'') );
+				echo $this->Form->input('Matrimonial.twitter_profile', array('type' => 'hidden','value' => '') );
+				echo $this->Form->input('Matrimonial.linkedin_profile', array('type' => 'hidden','value' => $profileURL) );
+				echo $this->Form->input('Matrimonial.google_profile', array('type' => 'hidden','value' =>  '') );
+			  }
 			?>
+            <div class="col-md-6 col-sm-6 input-row">
+                <?php echo $this->Form->input('Matrimonial.first_name', array('label' => 'First Name:','div' => false,'placeholder' => 'First Name','default' => $firstName) ); ?>
+           </div>
+          <div class="col-md-6 col-sm-6 input-row">
+           <?php echo $this->Form->input('Matrimonial.last_name', array('label' => 'Last Name:','div' => false,'placeholder' => 'Last Name','default' => $lastName) ); ?>
+         </div>
+         <div class="col-md-6 col-sm-6 input-row">
+          <?php echo $this->Form->input('Matrimonial.email_address', array('label' => 'Email:','div' => false,'placeholder' => 'Email','default' => $email) ); ?>
+         </div>
+         <div class="col-md-6 col-sm-6 input-row">
+              <?php echo $this->Form->input('Matrimonial.father_name', array('label' => 'Father\'s Name:','div' => false,'placeholder' => 'Father\'s Name','default' => '') ); ?>
+        </div>
         <div class="col-md-6 col-sm-6 input-row">
-                <?php echo $this->Form->input('Matrimonial.first_name', array('label' => 'First Name:','div' => false,'placeholder' => 'Last Name','default' => $firstName) ); ?>
-      </div>
-      <div class="col-md-6 col-sm-6 input-row">
-          <?php echo $this->Form->input('Matrimonial.last_name', array('label' => 'Last Name:','div' => false,'placeholder' => 'Last Name','default' => $lastName) ); ?>
-     </div>
-     <div class="col-md-6 col-sm-6 input-row">
-          <?php echo $this->Form->input('Matrimonial.email', array('label' => 'Email:','div' => false,'placeholder' => 'Email','default' => $email) ); ?>
-     </div>
-
-      <div class="col-md-6 col-sm-6 input-row">
-       <?php echo $this->Form->input('Matrimonial.father_name', array('label' => 'Father\'s Name:','div' => false,'placeholder' => 'Father\'s Name','default' => '') ); ?>
-
-      </div>
-
-      <div class="col-md-6 col-sm-6 input-row">
           <?php echo $this->Form->input('Matrimonial.mother_name', array('label' => 'Mother\'s Name:','div' => false,'placeholder' => 'Mother\'s Name','default' => '') ); ?>
-
-      </div>
-
-      <div class="col-md-6 col-sm-6 input-row">
-
+        </div>
+        <div class="col-md-6 col-sm-6 input-row">
         <label>Gender:</label>
-        <label class="radio"> <?php  $options = array('male' => 'Male', 'female' => 'Female');
+        <label class="radio"> <?php  $options = array('1' => 'Male', '2' => 'Female');
             $attributes = array('legend' => false,'default' => $gender);
             echo $this->Form->radio('Matrimonial.gender', $options, $attributes);?></label>
-
-      </div>
+       </div>
 
       <div class="col-md-6 col-sm-6 input-row">
-      <?php echo $this->Form->input('Matrimonial.date_of_birth', 
+      <?php echo $this->Form->input('Matrimonial.date_of_birth', array('label' => 'Date of Birth:','type'=>'text','div' => false,'placeholder' => 'mm/dd/yy','default' => '','readonly'=>'readonly') ); ?>
+      <?php /*echo $this->Form->input('Matrimonial.date_of_birth', 
 			 array(
 				'type' => 'date',
 				'label' => 'Date of Birth:<span>*</span>',
@@ -136,13 +176,14 @@ margin-left: 50%;
 					'year' => $birthYear ,
 				 )
 			)
-		); ?>
+		);*/ ?>
       </div> 
       <div class="col-md-6 col-sm-6 input-row">
-      <?php echo $this->Form->input('Matrimonial.time_of_birth', 
+       <?php echo $this->Form->input('Matrimonial.time_of_birth', array('label' => 'Time of Birth:','div' => false,'placeholder' => '00:00 AM','default' => '') ); ?>
+      <?php /*echo $this->Form->input('Matrimonial.time_of_birth', 
 			 array(
 				'type' => 'time',
-				'label' => 'Time of Birth:<span>*</span>',
+				'label' => 'Time of Birth:',
 				'timeFormat' => '12',
 				'empty' => array(
 					'hour' => 'Hour',
@@ -154,7 +195,7 @@ margin-left: 50%;
                     'class' => 'rselect',
                  )
 			 )
-		); ?>
+		);*/ ?>
        
       </div> 
 
@@ -260,14 +301,16 @@ margin-left: 50%;
 
       </div>
 
-      <div class="col-md-6 col-sm-6 input-row family-mem">
+      <div class="col-md-6 col-sm-6 input-row">
 
-        <label>Family Member:</label>
-
-        <label class="shortinput">Brother  <?php echo $this->Form->input('Matrimonial.number_of_sisters', array('label' => false,'div' => false) ); ?> Sister <?php echo $this->Form->input('Matrimonial.number_of_sisters', array('label' => false,'div' => false ) ); ?></label>
-
-      </div>
-
+         <?php echo $this->Form->input('Matrimonial.number_of_brothers', array('default' => '0') ); ?> 
+         </div>
+      <div class="col-md-6 col-sm-6 input-row">
+           <?php echo $this->Form->input('Matrimonial.number_of_sisters', array('default' => '0') ); ?>
+        </div>
+       <div class="col-md-6 col-sm-6 input-row">
+        <?php echo $this->Form->input('Matrimonial.address', array('label' => 'Address:','div'=> array('class'=>'addressdiv'),'type' => 'textarea','default' => $address) ); ?>
+       </div>
       <div class="col-md-6 col-sm-6 input-row">
        <?php  $height = array(
 	   'less than 4.6' => 'Less than 4 ft 6 in',
@@ -310,29 +353,38 @@ margin-left: 50%;
          );?>        
 
        </div>
-       <div class="col-md-6 col-sm-6 input-row">
-        <?php echo $this->Form->input('Matrimonial.address', array('label' => 'Address:','div'=> array('class'=>'addressdiv'),'type' => 'textarea','default' => $address) ); ?>
-       </div> 
+        
        <div class="col-md-6 col-sm-6 input-row">
         <?php echo $this->Form->input('Matrimonial.city', array('label' => 'City:','div' => false,'placeholder' => 'City','default' => $city) ); ?>
        </div>      
-       <div class="col-md-6 col-sm-6 input-row">
+      <!-- <div class="col-md-6 col-sm-6 input-row">
          <label>Select Country: </label> <select onchange="print_state('state', this.selectedIndex);" id="country" name ="country"></select>
        </div>
        <div class="col-md-6 col-sm-6 input-row">
         <label>State/District:</label><select name ="state" id ="state"></select>
         <script language="javascript">print_country("country");</script>
+       </div>-->
+       <div class="col-md-6 col-sm-6 input-row">
+         <?php echo $this->Form->input('State.field', array('label' => 'Select State:','div' => array('id'=>'statechange'), 'type'=>'select','options'=>$states,'default' => '') ); ?>
        </div>
        <div class="col-md-6 col-sm-6 input-row">
          <?php echo $this->Form->input('Matrimonial.zip', array('label' => 'Zip code:','div' => false,'placeholder' => 'Zip code','default' => $zip) ); ?>
-       </div> 
+       </div>
+       <div class="col-md-6 col-sm-6 input-row">
+         <?php echo $this->Form->input('Country.field', array('label' => 'Select Country:','div' => false, 'type'=>'select','options'=>$countries,'default' => '103','onchange'=>'changestate(this.value);') ); ?>
+       </div>
+        
+        
             
        <div class="col-md-6 col-sm-6 input-row">
-         <?php echo $this->Form->input('Matrimonial.contact_number', array('label' => 'Contact Number:','div' => false,'placeholder' => 'Contact Number','default' => $phone) ); ?>
+         <?php echo $this->Form->input('Matrimonial.contact_number', array('label' => 'Contact Number:','div' => false,'placeholder' => 'Contact Number','default' => $phone)); ?>
 
-        </div>      
+        </div>  
+        <div class="col-md-6 col-sm-6 input-row">
+        <?php echo $this->Form->input('Matrimonial.other_qualification', array('label' => 'Other Qualification:','div'=> array('class'=>'addressdiv'),'type' => 'textarea','default' => '') ); ?>
+       </div>     
 
-      <div class="title-row"><strong>Register your Gotra</strong></div>
+      <div class="title-row" style='margin-top:20px;'><strong>Register your Gotra</strong></div>
 
       <div class="col-md-6 col-sm-6 input-row">
        <?php  $gotra = array(
@@ -441,14 +493,16 @@ margin-left: 50%;
 		'Tingal' => 'Tingal',
 		);
            echo $this->Form->input(
-              'Matrimonial.Nani_gotra',
+              'Matrimonial.nani_gotra',
               array('label' => 'Nani Gotra:','options' => $gotra, 'default' => '','empty' => 'Choose Gotra')
          );?>
       </div>
 
        <div class="col-md-12 col-sm-12 input-row">
        <?php echo $this->Form->input(
-              'profile_image', array('label' => 'Your Profile Photo: ','div' => array('style'=>'width:50%'),'type' => 'file'));?><div class='imageset'><img src='<?php echo $photoURL;?>'  /></div>
+              'Matrimonial.profile_image', array('label' => 'Your Profile Photo: ','div' => array('style'=>'width:50%'),'type' => 'file'));
+              echo $this->Form->input('Matrimonial.profile_image_social', array('type' => 'hidden','value' =>  $photoURL) ); ?>
+        <div class='imageset'><img src='<?php echo $photoURL;?>'  /></div>
 
       </div>
 
@@ -456,15 +510,157 @@ margin-left: 50%;
 
        <div class="col-md-12 col-sm-12 input-row textarea">
         <?php echo $this->Form->input(
-              'Matrimonial.profile_short_description', array('label' => 'About Your Profile Description :','type' => 'textarea','default'=>$description));?>
+              'Matrimonial.profile_short_description', array('label' =>'Profile Short Description :','type' => 'textarea','default'=>$description));?>
+
+      </div>
+       <div class="col-md-12 col-sm-12 input-row textarea" style='margin-top:10px;'>
+        <?php echo $this->Form->input(
+              'Matrimonial.profile_long_description', array('label' => 'Profile Long Description :','type' => 'textarea','default'=>$description));?>
 
       </div>
 
       <div class="col-md-6 col-sm-6 input-row">
-        <?php
-		echo $this->Form->button('Register Now', array('type' => 'button','onclick'=> "this.form.submit();" ,'class'=>'register-btn btn'));
-        echo $this->Form->end();?>
+       <?php
+		//echo $this->Form->button('Register Now', array('type' => 'button','onclick'=> "this.form.submit();" ,'class'=>'register-btn btn'));
+		echo $this->Form->button('Register Now', array('type' => 'submit' ,'class'=>'register-btn btn'));
+        echo $this->Form->end();
+		//echo $javascript->codeBlock('$("#UserRegisterForm").validate();', array('inline'=>true));
+		
+		?>
          </div>
    </div>
 </div>
-<?php } ?>
+<?php }
+if(isset($user_exist)){?>
+<div class="middle-container">
+     <div class="form" style="margin-left: 10%;
+margin-top: 8%;">
+   <?php echo $this->Form->create('User');?>
+     <form name="connectagain" method="post" action="" >
+     Hello <?php echo $user_exist['Matrimonial']['first_name'];?>,<br/>
+     You are already connected with us, would you like to connect again?<br/>
+     <!--<button class="btn btn-success" type="submit" value="yes" data-bb-handler="success">Yes</button>
+     <button class="btn btn-primary" type="submit" value="no" data-bb-handler="main">No</button>-->
+      <?php echo $this->Form->input('User.id', array('type' => 'hidden','value' => $user_exist['User']['id'])); 
+	  echo $this->Form->input('User.confirm', array('type' => 'hidden','value' => '')); 
+	   echo $this->Form->button('Yes', array('type' => 'button' ,'class'=>'btn btn-success','value'=>'yes','onclick'=>'formconfirmation(this.value);'));?> &nbsp;&nbsp; <?php
+	   echo $this->Form->button('No', array('type' => 'button' ,'class'=>'btn btn-primary','value'=>'no','onclick'=>'formconfirmation(this.value);'));
+        echo $this->Form->end();?>
+     </div>
+   </div>
+</div>	
+<?php }?>
+<script type="application/javascript" >
+function formconfirmation(val){
+	jQuery('#UserConfirm').val(val);
+	jQuery("#UserLoginwithForm" ).submit();
+}
+jQuery(document).ready(function(){
+	jQuery('#UserRegisterForm').validate({
+	    rules: {
+	      "data[Matrimonial][first_name]": {
+	      	required: true
+	      },
+	     "data[Matrimonial][last_name]": {
+	        required: true
+	      },
+		  "data[Matrimonial][email_address]": {
+	        required: true,
+	        email: true
+	      },
+		  "data[Matrimonial][father_name]": {
+	        required: true
+	      },
+		  "data[Matrimonial][mother_name]": {
+	        required: true
+	      },
+		  "data[Matrimonial][caste]": {
+	        required: true
+	      },
+		  "data[Matrimonial][number_of_brothers]": {
+	        required: true,
+			number:true,
+			range: [0,10]
+	      },
+		  "data[Matrimonial][number_of_sisters]": {
+	        required: true,
+			number:true,
+			range: [0,10]
+	      },
+		  "data[Matrimonial][gender]": {
+	        required: true
+	      },
+		  "data[Matrimonial][education]": {
+	        required: true
+	      },
+		  "data[Matrimonial][date_of_birth]": {
+	        required: true,
+			date: true
+	      },
+		  "data[Matrimonial][profession]": {
+	        required: true
+	      },
+		  "data[Matrimonial][city]": {
+	        required: true
+	      },
+		  "data[Matrimonial][address]": {
+	        required: true
+	      },
+		  "data[Matrimonial][zip]": {
+	       required: true,
+			 number: true
+	      },
+		  "data[Matrimonial][contact_number]": {
+	         required: true,
+			 number: true
+	      },
+		  "data[Matrimonial][father_gotra]": {
+	        required: true
+	      },
+		  "data[Matrimonial][mother_gotra]": {
+	        required: true
+	      },
+		  "data[Matrimonial][dadi_gotra]": {
+	        required: true
+	      },
+		  "data[Matrimonial][nani_gotra]": {
+	        required: true
+	      },
+		  "data[Matrimonial][profile_image]": {
+	         accept: "jpg,jpeg,png,gif"
+	      },
+		  "data[Matrimonial][profile_short_description]": {
+	          required: true,
+			  minlength: 50
+	      },
+       },
+	   messages: {
+		    "data[Matrimonial][first_name]": {
+				required: "First Name is not empty.",
+			},
+			"data[Matrimonial][profile_image]": {
+				accept: "Please enter an image file.(format may be jpg,jpeg,png,gif)",
+			}
+		},
+		highlight: function(element) {
+				$(element).closest('.input-row').removeClass('success').addClass('error');
+		},
+		success: function(element) {
+				element
+				.text('OK!').addClass('valid')
+				.closest('.input-row').removeClass('error').addClass('success');
+		}
+	  });
+});	
+//jQuery('#dp3').datepicker();
+jQuery("#MatrimonialDateOfBirth").datepicker({dateFormat: 'mm/dd/yy',changeYear: true,yearRange:'1980:2000'});
+jQuery('#MatrimonialTimeOfBirth').timepicker({ 'step': 10 });
+function changestate(val){
+	var countryid=val;
+	if(countryid!='103'){
+		jQuery('#statechange').html('<label for="StateField">Select State:</label><input name="data[State][field]" placeholder="State" type="text" id="StateField">');
+	}else{
+		jQuery('#statechange').html('<label for="StateField">Select State</label><select name="data[State][field]" id="StateField" class="valid"><option value="1">Andaman and Nicobar Island (UT)</option><option value="2">Andhra Pradesh</option><option value="3">Arunachal Pradesh</option><option value="4">Assam</option><option value="5">Bihar</option><option value="6">Chandigarh (UT)</option><option value="7">Chhattisgarh</option><option value="8">Dadra and Nagar Haveli (UT)</option><option value="9">Daman and Diu (UT)</option><option value="10">Delhi (NCT)</option><option value="11">Goa</option><option value="12">Gujarat</option><option value="13">Haryana</option><option value="14">Himachal Pradesh</option><option value="15">Karnataka</option><option value="16">Kerala</option><option value="17">Lakshadweep (UT)</option><option value="18">Madhya Pradesh</option><option value="19">Maharashtra</option><option value="20">Manipur</option><option value="21">Meghalaya</option><option value="22">Mizoram</option><option value="23">Nagaland</option><option value="24">Odisha</option><option value="25">Puducherry (UT)</option><option value="26">Punjab</option><option value="27">Rajasthan</option><option value="28">Sikkim</option><option value="29">Tamil Nadu</option><option value="30">Tripura</option><option value="31">Uttarakhand</option><option value="32">Uttar Pradesh</option><option value="33">West Bengal</option></select>');
+	}
+}
+</script>

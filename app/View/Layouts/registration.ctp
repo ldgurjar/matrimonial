@@ -35,11 +35,16 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <?php echo $this->Html->css('comman');?>
-    <?php echo $this->Html->script('countries3');?>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <!--<?php echo $this->Html->css('comman');?>-->
+    <?php echo $this->Html->script('bootstrap.min');?>
+    <?php echo $this->Html->script('jquery.validate.min');?>
+    <?php echo $this->Html->script('jquery.timepicker');?>
+    <?php echo $this->Html->css('jquery.timepicker');?>
+    <!--<?php echo $this->Html->script('bootstrap-datepicker');?>-->
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div class="wrapper">
@@ -53,7 +58,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
         <div class="col-md-offset-4 col-md-4 col-sm-4 col-sm-offset-4 text-center col-xs-8">
 
-          <a class="logo" id="logo" href="#">&nbsp;</a>
+          <a class="logo" id="logo" href="<?php echo $this->html->url('/users/login', true);?>">&nbsp;</a>
 
         </div>
 
@@ -80,7 +85,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
       <article class="text-center container">
 
-        <a  id="textlogo" class="col-md-12 col-sm-12 col-xs-12" href="index.html">&nbsp;</a>
+        <a  id="textlogo" class="col-md-12 col-sm-12 col-xs-12" href="<?php echo $this->html->url('/users/login', true);?>">&nbsp;</a>
 
       </article>
 

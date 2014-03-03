@@ -23,7 +23,6 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php //echo $cakeDescription ?>:
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
@@ -53,7 +52,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
         <div class="col-md-offset-4 col-md-4 col-sm-4 col-sm-offset-4 text-center col-xs-8">
 
-          <a class="logo" id="logo" href="#">&nbsp;</a>
+          <a class="logo" id="logo" href="<?php echo BASE_URL; ?>users/">&nbsp;</a>
 
         </div>
 
@@ -70,42 +69,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
             </select>
 
           </div>
-
-          <!-- <div class="member-login pull-right">
-
-            <button class="btn">Member Login <span class="glyphicon glyphicon-chevron-down"></span></button>
-
-            <div class="pop-up-box">
-
-              <div class="labelRow">
-
-                <label>User Id:</label> <input type="text" placeholder="User Id">
-
-              </div>
-
-              <div class="labelRow">
-
-                <label>Password:</label> <input type="password" placeholder="Password">
-
-              </div>
-
-              <div class="labelRow">
-
-                <a class="linke" href="#">Forgot Password</a> 
-
-                <button class="btn">Log in</button>
-
-                <div class="clear"></div>
-
-              </div>
-
-              <div class="labelRow"> <a href="#" class="linke">New User? Register Now!</a></div>
-
-            </div>
-
-          </div> -->
-
-        </div>
+          </div>
 
       </div>
 
@@ -115,7 +79,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
       <article class="text-center container">
 
-        <a  id="textlogo" class="col-md-12 col-sm-12 col-xs-12" href="index.html">&nbsp;</a>
+        <a  id="textlogo" class="col-md-12 col-sm-12 col-xs-12" href="<?php echo BASE_URL; ?>users/">&nbsp;</a>
 
       </article>
 
@@ -128,7 +92,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
   <div class="row">
 
-    <article class="col-md-6 col-md-offset-3">
+    <article class="col-md-12">
       <?php echo $this->Session->flash(); ?>
       <?php echo $this->fetch('content'); ?>
      </article>
@@ -188,6 +152,6 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		</div>
 	</div>-->
     
-	<?php echo $this->element('sql_dump'); ?>
+	<?php //echo $this->element('sql_dump'); ?>
 </body>
 </html>

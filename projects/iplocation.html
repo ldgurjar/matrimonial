@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p id="demo">Click the button to get your coordinates:</p>
+<button onclick="getLocation()">Try It</button>
+<div  id="google_translate_element"></div>
+<script>
+var x=document.getElementById("demo");
+function getLocation()
+  {
+  if (navigator.geolocation)
+    {
+       navigator.geolocation.getCurrentPosition(showPosition);
+	   console(navigator.geolocation);
+    }
+  else{x.innerHTML="Geolocation is not supported by this browser.";}
+  }
+function showPosition(position)
+  {
+  x.innerHTML="Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;	
+  }
+</script>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'hi', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+googleTranslateElementInit();
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<div> This is Element</div>
+</body>
+</html>

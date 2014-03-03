@@ -74,11 +74,16 @@
  *
  * @see ErrorHandler for more information on exception handling and configuration.
  */
-	Configure::write('Exception', array(
+	/*Configure::write('Exception', array(
 		'handler' => 'ErrorHandler::handleException',
 		'renderer' => 'ExceptionRenderer',
 		'log' => true
-	));
+	));*/
+	Configure::write('Exception', array(
+        'handler' => 'ErrorHandler::handleException',
+        'renderer' => 'AppExceptionRenderer',
+        'log' => true
+    ));
 
 /**
  * Application wide charset encoding
@@ -105,6 +110,7 @@
  * thus not recommended for production applications.
  */
 	//Configure::write('App.baseUrl', env('SCRIPT_NAME'));
+	define("BASE_URL", "http://vervelogicshowcase.com/");
 
 /**
  * To configure CakePHP to use a particular domain URL

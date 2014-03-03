@@ -2,7 +2,22 @@
 // app/Model/User.php
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 class User extends AppModel {
-    public $validate = array(
+	//public $hasOne = 'Profile';
+	public $hasOne = 'Matrimonial';
+	//public $hasOne = array('Matrimonial','City','Country','State');
+	var $hasMany = array( 
+         'PhotoCustomer' => array( 
+			 'className'     => 'PhotoCustomer', 
+			 'foreignKey'    => 'internal_id_primary_key'      
+               ),
+	     'IdProof' => array( 
+             'className'     => 'IdProof', 
+             'foreignKey'    => 'internal_id_primary_key'       
+               )		    
+    );
+	
+	
+    /*public $validate = array(
         'username' => array(
             'required' => array(
                 'rule' => array('notEmpty'),
@@ -23,8 +38,8 @@ class User extends AppModel {
             )
         )
     );
-	
-	
+	*/
+	/*
 	public function beforeSave($options = array()) {
     if (isset($this->data[$this->alias]['password'])) {
         $passwordHasher = new SimplePasswordHasher();
@@ -33,5 +48,5 @@ class User extends AppModel {
         );
     }
     return true;
-   }
+   }*/
 }?>
